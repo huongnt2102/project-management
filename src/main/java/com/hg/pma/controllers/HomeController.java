@@ -1,10 +1,10 @@
 package com.hg.pma.controllers;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +21,9 @@ import com.hg.pma.entities.Project;
 @Controller
 public class HomeController {
 	
+	@Value("${version: 3.3.0}")
+	private String ver;
+	
 	@Autowired
 	ProjectRepository proRepo;
 	
@@ -28,9 +31,9 @@ public class HomeController {
 	EmployeeRepository emRepo;
 	
 	@GetMapping("/")
-	public String displayHome(Model model) throws JsonProcessingException{
+	public String displayHome(Model model) throws JsonProcessingException {
 		
-		Map<String, Object> map = new HashMap<> ();
+		model.addAttribute("versionNumber", ver);
 		
 		// query the database for projects
 		List<Project> projects = proRepo.findAll();
